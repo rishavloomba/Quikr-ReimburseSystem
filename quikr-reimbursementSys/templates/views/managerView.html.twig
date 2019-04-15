@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+ 
+ {% block title %}Expense Requestes{% endblock %}
+
+ {% block stylesheets %}
+  <link rel="stylesheet" href="/assets/reimbursement.css" >
+ {% endblock %}
+
+ {% block body %}
+  <!-- header -->
+ <header>
+    <!-- Navbar -->
+    {{ include('inc/navbar.html.twig') }}
+</header> 
+
+<!-- Section -->
+<section class="container">
+
+<div class="jumbotron">
+   <div class="page-header">
+       <h3>Expenses Request</h3>
+   </div>
+   
+     <!-- Table -->
+    <table cellpadding="0" cellspacing="0" border="0" class="table display" id="example" width="100%">
+      <thead>
+          <tr>
+            <th>Emp Id</th>
+            <th>Travle Expense</th>
+            <th>Telephone Expense</th>
+            <th>Bussiness Meal</th>
+            <th>Hotel Stay</th>
+            <th>Description</th>
+            <th>Total</th>
+            <th>Action</th>
+
+         </tr>
+      </thead>
+       <tbody>
+       {% if result %}
+         {% for res in result %}
+           <tr>
+                <td> {{ res.empid }} </td>
+                <td> {{ res.travel_exp }} </td>
+                <td> {{ res.telephone_exp }} </td>
+                <td> {{ res.business_meal}} </td>
+                <td> {{ res.hotel_stay }}</td>
+                <td> {{ res.description }}</td>
+                <td> {{ res.total_expense}}</td>
+                
+                <!-- Approve or Reject -->
+                <td>
+                     {% if res.status == "pending" %}
+                      <a id="publish" name="status" class="btn btn-xs btn-info" 
+                             href="/manager/approve/{{res.taskid}}"> Approve</a>
+                      <a class="btn btn-xs btn-warning" href="/manager/{{res.taskid}}/reject" >Reject</a>
+                     
+                     {% else %}
+                        <p> res.status </p>
+                     {% endif %}
+                </td>
+              </tr>
+             </form>  
+        {% endfor %}
+   {% else %}
+            <h3> No data </h3>
+    {% endif %}
+   </tbody>
+  </table>   
+</div>
+
+</section>
+{% endblock %}
+
